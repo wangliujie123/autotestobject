@@ -1,0 +1,789 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>测试报告</title>
+        <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.5.0/css/bootstrap.min.css">
+    <script src=" https://cdn.staticfile.org/jquery/2.0.0/jquery.min.js"></script>
+    <script src="https://cdn.staticfile.org/echarts/5.1.2/echarts.min.js"></script>
+    <!--    页面样式-->
+    <style type="text/css">
+        /*标题样式*/
+        .title {
+            width: auto;
+            height: 60px;
+            text-align: center;
+            font: bolder 38px/60px "Microsoft YaHei UI";
+        }
+
+        /*汇总信息样式*/
+        .summary {
+            width: 90%;
+            position: absolute;
+            top: 120px;
+            margin-left: 5%;
+
+        }
+
+        .text-left {
+            font: bolder 20px/30px "Microsoft YaHei UI";
+        }
+
+        .left {
+            width: 50%;
+            float: left;
+
+        }
+
+        .right {
+            width: 50%;
+            float: right;
+
+        }
+
+        .desc {
+            float: left;
+            width: 100%;
+        }
+
+        .list-group-item span {
+            font: normal 16px/38px "Microsoft YaHei UI";
+            padding: 30px;
+
+        }
+
+        .list-group-item {
+            position: relative;
+            display: block;
+            padding: .4rem 1.25rem;
+            background-color: #fff;
+            border: 1px solid rgba(0, 0, 0, .125);
+        }
+
+        /* 执行信息样式   */
+        .test_info {
+            width: 90%;
+            position: absolute;
+            top: 900px;
+            margin-left: 5%;
+
+            color: #28a745 !important;
+        }
+
+        .table td, th {
+            border: solid 2px rgba(9, 122, 51, 0.11) !important;
+            padding: 0;
+            line-height: 40px;
+            text-align: center;
+
+        }
+
+
+        select {
+            border: 0;
+            padding: 0;
+            margin: 0;
+            height: 2em;
+            width: 8em;
+            margin-left: 2em;
+        }
+
+        option {
+            text-align: center;
+            height: 36px;
+            font: none 18px/36px "Microsoft YaHei UI";
+            color: #28a745 !important;
+        }
+
+        .test_log {
+            background: rgba(163, 171, 189, 0.15);
+            width: 100%;
+            height: 50px;
+            border-top: none;
+            border-bottom: none;
+            display: none;
+            text-align: left;
+        }
+
+        .test_log td {
+            text-align: left;
+            height: 30px;
+            margin: 0;
+            padding-left: 3em;
+            padding-right: 3em;
+            font: none 18px/24px "Microsoft YaHei UI";
+            color: #9e141a;
+        }
+
+        pre {
+            margin: 0;
+            white-space: pre-wrap;
+            white-space: -moz-pre-wrap;
+            white-space: -o-pre-wrap;
+            word-wrap: break-word;
+        }
+
+        /*    测试图表显示*/
+        .char {
+            width: 90%;
+            position: absolute;
+            top: 450px;
+            margin-left: 5%;
+            color: #28a745 !important;
+        }
+
+    </style>
+
+</head>
+<body>
+
+<!--报告标题-->
+<div class="title text-success">
+    <div class="shadow-lg p-3 mb-5 bg-white rounded">边缘组件自动化验收报告</div>
+</div>
+
+<!--汇总信息-->
+<div class="summary">
+    <p class="text-left text-success">测试结果汇总</p>
+    <div class="left">
+        <ul class="list-group">
+            <li class="list-group-item">
+                <button type="button" class="btn btn-success">测试人员</button>
+                <span class="text-dark">测试员</span>
+            </li>
+            <li class="list-group-item">
+                <button type="button" class="btn btn-success">开始时间</button>
+                <span class="text-dark">2024-04-10 19:49:48</span>
+            </li>
+            <li class="list-group-item">
+                <button type="button" class="btn btn-success">执行时间</button>
+                <span class="text-dark">18.691803 S</span>
+            </li>
+            <li class="list-group-item">
+                <button type="button" class="btn btn-success">用例总数</button>
+                <span class="text-dark">2</span>
+            </li>
+
+
+        </ul>
+    </div>
+    <div class="right">
+        <ul class="list-group">
+
+            <li class="list-group-item">
+                <button type="button" class="btn btn-success">成功用例</button>
+                <span class="text-success">1</span>
+            </li>
+            <li class="list-group-item">
+                <button type="button" class="btn btn-danger">失败用例</button>
+                <span class="text-warning">1</span>
+            </li>
+            <li class="list-group-item">
+                <button type="button" class="btn btn-warning">错误用例</button>
+                <span class="text-danger">0</span>
+            </li>
+            <li class="list-group-item">
+                <button type="button" class="btn btn-secondary">跳过用例</button>
+                <span class="text-secondary">0</span>
+            </li>
+        </ul>
+    </div>
+    <div class="desc">
+        <ul class="list-group">
+            <li class="list-group-item">
+                <button type="button" class="btn btn-success">描述信息</button>
+                <span class="text-secondary">报告描述信息</span>
+            </li>
+        </ul>
+    </div>
+</div>
+
+<!--测试图表-->
+<div class="char">
+    <p class="text-left text-success">图表展示</p>
+    <div id="char2" style="width: 49%;height: 400px;float: left"></div>
+    <div id="char" style="width: 49%;height: 400px ;float: left"></div>
+</div>
+
+<!--详细信息-->
+<div class="test_info">
+
+    <p class="text-left text-success">详细信息</p>
+    <div class="table_data">
+
+        <table class="table">
+            <thead class="bg-success text-light">
+            <tr>
+                <th scope="col" style="width: 5%;padding: 0">编号</th>
+                <th scope="col" style="width: 20%;padding: 0">
+                    <span>用例模块</span>
+                    <select id="testClass">
+                        <option>所有</option>
+                        
+                        <option value="testcasestest_001py">testcases\test_001.py</option>
+                        
+                    </select>
+                </th>
+                <th scope="col" style="width: 15%;padding: 0">测试方法</th>
+                <th scope="col" style="width: 20%;padding: 0">用例描述</th>
+                <th scope="col" style="width: 10%;padding: 0">执行时间</th>
+                <th scope="col" style="width: 20%;padding: 0">
+
+                    <span>执行结果</span>
+                    <select id="testResult">
+                        <option>所有</option>
+                        <option class="text-success">成功</option>
+                        <option class="text-warning">失败</option>
+                        <option class="text-danger">错误</option>
+                        <option class="text-info">跳过</option>
+                    </select>
+
+                </th>
+                <th scope="col" style="width: 10%;padding: 0">详细信息</th>
+            </tr>
+            </thead>
+            <tbody>
+            
+            <tr >
+
+
+                <td>1</td>
+                <td class="testcasestest_001py">testcases\test_001.py</td>
+                <td>test_02</td>
+                <td>None</td>
+                <td>4.136796</td>
+                
+                <td class="text-warning">失败</td>
+                
+                <td>
+                    <button type="button" class="btn btn-success btn_info">查看详情</button>
+                </td>
+            </tr>
+            <tr class="test_log">
+                <td colspan="7" class="small text-muted" style=" word-wrap:break-word; word-break:break-all;padding: 0">
+                    <div class="card">
+                        <div class="card-body">
+                            <ul class="nav nav-tabs" role="tablist">
+                                <li class="nav-item" role="presentation">
+                                    <a class="nav-link active" data-toggle="tab" role="tab" aria-controls="home"
+                                       aria-selected="true" style="padding: 0 16px">运行日志</a>
+                                </li>
+                                <li class="nav-item" role="presentation">
+                                    <a class="nav-link" data-toggle="tab" role="tab" aria-controls="profile"
+                                       aria-selected="false" style="padding: 0 16px">调试输出</a>
+                                </li>
+                                
+                                <li class="nav-item" role="presentation">
+                                    <a class="nav-link" data-toggle="tab" role="tab" aria-controls="contact"
+                                       aria-selected="false" style="padding: 0 16px">异常信息</a>
+                                </li>
+                                
+                                
+
+                            </ul>
+                            <div class="tab-content" style="height: 300px;overflow-y: auto;padding: 20px">
+
+                                <div class="tab-pane fade show active" role="tabpanel" aria-labelledby="profile-tab">
+                                    <pre style="line-height: 18px">[32mINFO    [0m root:base.py:18 通过xpath定位,元素是//input[@placeholder='账号']
+[35mDEBUG   [0m selenium.webdriver.remote.remote_connection:remote_connection.py:301 POST http://localhost:63169/session/0d5b7672cc1ae611982e812160f1962c/element {'using': 'xpath', 'value': "//input[@placeholder='账号']"}
+[35mDEBUG   [0m urllib3.connectionpool:connectionpool.py:549 http://localhost:63169 "POST /session/0d5b7672cc1ae611982e812160f1962c/element HTTP/1.1" 200 0
+[35mDEBUG   [0m selenium.webdriver.remote.remote_connection:remote_connection.py:330 Remote response: status=200 | data={"value":{"element-6066-11e4-a52e-4f735466cecf":"f.926085B246BB9B4630751145BCA91F84.d.3EF5EA37938A803EC692BD4597F03F0E.e.5"}} | headers=HTTPHeaderDict({'Content-Length': '125', 'Content-Type': 'application/json; charset=utf-8', 'cache-control': 'no-cache'})
+[35mDEBUG   [0m selenium.webdriver.remote.remote_connection:remote_connection.py:357 Finished Request
+[35mDEBUG   [0m selenium.webdriver.remote.remote_connection:remote_connection.py:301 POST http://localhost:63169/session/0d5b7672cc1ae611982e812160f1962c/element/f.926085B246BB9B4630751145BCA91F84.d.3EF5EA37938A803EC692BD4597F03F0E.e.5/value {'text': 'admin', 'value': ['a', 'd', 'm', 'i', 'n']}
+[35mDEBUG   [0m urllib3.connectionpool:connectionpool.py:549 http://localhost:63169 "POST /session/0d5b7672cc1ae611982e812160f1962c/element/f.926085B246BB9B4630751145BCA91F84.d.3EF5EA37938A803EC692BD4597F03F0E.e.5/value HTTP/1.1" 200 0
+[35mDEBUG   [0m selenium.webdriver.remote.remote_connection:remote_connection.py:330 Remote response: status=200 | data={"value":null} | headers=HTTPHeaderDict({'Content-Length': '14', 'Content-Type': 'application/json; charset=utf-8', 'cache-control': 'no-cache'})
+[35mDEBUG   [0m selenium.webdriver.remote.remote_connection:remote_connection.py:357 Finished Request
+[32mINFO    [0m root:base.py:18 通过xpath定位,元素是//input[@placeholder='密码']
+[35mDEBUG   [0m selenium.webdriver.remote.remote_connection:remote_connection.py:301 POST http://localhost:63169/session/0d5b7672cc1ae611982e812160f1962c/element {'using': 'xpath', 'value': "//input[@placeholder='密码']"}
+[35mDEBUG   [0m urllib3.connectionpool:connectionpool.py:549 http://localhost:63169 "POST /session/0d5b7672cc1ae611982e812160f1962c/element HTTP/1.1" 200 0
+[35mDEBUG   [0m selenium.webdriver.remote.remote_connection:remote_connection.py:330 Remote response: status=200 | data={"value":{"element-6066-11e4-a52e-4f735466cecf":"f.926085B246BB9B4630751145BCA91F84.d.3EF5EA37938A803EC692BD4597F03F0E.e.6"}} | headers=HTTPHeaderDict({'Content-Length': '125', 'Content-Type': 'application/json; charset=utf-8', 'cache-control': 'no-cache'})
+[35mDEBUG   [0m selenium.webdriver.remote.remote_connection:remote_connection.py:357 Finished Request
+[35mDEBUG   [0m selenium.webdriver.remote.remote_connection:remote_connection.py:301 POST http://localhost:63169/session/0d5b7672cc1ae611982e812160f1962c/element/f.926085B246BB9B4630751145BCA91F84.d.3EF5EA37938A803EC692BD4597F03F0E.e.6/value {'text': 'HM_2023_test', 'value': ['H', 'M', '_', '2', '0', '2', '3', '_', 't', 'e', 's', 't']}
+[35mDEBUG   [0m urllib3.connectionpool:connectionpool.py:549 http://localhost:63169 "POST /session/0d5b7672cc1ae611982e812160f1962c/element/f.926085B246BB9B4630751145BCA91F84.d.3EF5EA37938A803EC692BD4597F03F0E.e.6/value HTTP/1.1" 200 0
+[35mDEBUG   [0m selenium.webdriver.remote.remote_connection:remote_connection.py:330 Remote response: status=200 | data={"value":null} | headers=HTTPHeaderDict({'Content-Length': '14', 'Content-Type': 'application/json; charset=utf-8', 'cache-control': 'no-cache'})
+[35mDEBUG   [0m selenium.webdriver.remote.remote_connection:remote_connection.py:357 Finished Request
+[32mINFO    [0m root:base.py:18 通过xpath定位,元素是//input[@placeholder='验证码']
+[35mDEBUG   [0m selenium.webdriver.remote.remote_connection:remote_connection.py:301 POST http://localhost:63169/session/0d5b7672cc1ae611982e812160f1962c/element {'using': 'xpath', 'value': "//input[@placeholder='验证码']"}
+[35mDEBUG   [0m urllib3.connectionpool:connectionpool.py:549 http://localhost:63169 "POST /session/0d5b7672cc1ae611982e812160f1962c/element HTTP/1.1" 200 0
+[35mDEBUG   [0m selenium.webdriver.remote.remote_connection:remote_connection.py:330 Remote response: status=200 | data={"value":{"element-6066-11e4-a52e-4f735466cecf":"f.926085B246BB9B4630751145BCA91F84.d.3EF5EA37938A803EC692BD4597F03F0E.e.7"}} | headers=HTTPHeaderDict({'Content-Length': '125', 'Content-Type': 'application/json; charset=utf-8', 'cache-control': 'no-cache'})
+[35mDEBUG   [0m selenium.webdriver.remote.remote_connection:remote_connection.py:357 Finished Request
+[35mDEBUG   [0m selenium.webdriver.remote.remote_connection:remote_connection.py:301 POST http://localhost:63169/session/0d5b7672cc1ae611982e812160f1962c/element/f.926085B246BB9B4630751145BCA91F84.d.3EF5EA37938A803EC692BD4597F03F0E.e.7/value {'text': '2', 'value': ['2']}
+[35mDEBUG   [0m urllib3.connectionpool:connectionpool.py:549 http://localhost:63169 "POST /session/0d5b7672cc1ae611982e812160f1962c/element/f.926085B246BB9B4630751145BCA91F84.d.3EF5EA37938A803EC692BD4597F03F0E.e.7/value HTTP/1.1" 200 0
+[35mDEBUG   [0m selenium.webdriver.remote.remote_connection:remote_connection.py:330 Remote response: status=200 | data={"value":null} | headers=HTTPHeaderDict({'Content-Length': '14', 'Content-Type': 'application/json; charset=utf-8', 'cache-control': 'no-cache'})
+[35mDEBUG   [0m selenium.webdriver.remote.remote_connection:remote_connection.py:357 Finished Request
+[32mINFO    [0m root:base.py:18 通过xpath定位,元素是//span[text()='登录']/ancestor::button
+[35mDEBUG   [0m selenium.webdriver.remote.remote_connection:remote_connection.py:301 POST http://localhost:63169/session/0d5b7672cc1ae611982e812160f1962c/element {'using': 'xpath', 'value': "//span[text()='登录']/ancestor::button"}
+[35mDEBUG   [0m urllib3.connectionpool:connectionpool.py:549 http://localhost:63169 "POST /session/0d5b7672cc1ae611982e812160f1962c/element HTTP/1.1" 200 0
+[35mDEBUG   [0m selenium.webdriver.remote.remote_connection:remote_connection.py:330 Remote response: status=200 | data={"value":{"element-6066-11e4-a52e-4f735466cecf":"f.926085B246BB9B4630751145BCA91F84.d.3EF5EA37938A803EC692BD4597F03F0E.e.8"}} | headers=HTTPHeaderDict({'Content-Length': '125', 'Content-Type': 'application/json; charset=utf-8', 'cache-control': 'no-cache'})
+[35mDEBUG   [0m selenium.webdriver.remote.remote_connection:remote_connection.py:357 Finished Request
+[35mDEBUG   [0m selenium.webdriver.remote.remote_connection:remote_connection.py:301 POST http://localhost:63169/session/0d5b7672cc1ae611982e812160f1962c/element/f.926085B246BB9B4630751145BCA91F84.d.3EF5EA37938A803EC692BD4597F03F0E.e.8/click {}
+[35mDEBUG   [0m urllib3.connectionpool:connectionpool.py:549 http://localhost:63169 "POST /session/0d5b7672cc1ae611982e812160f1962c/element/f.926085B246BB9B4630751145BCA91F84.d.3EF5EA37938A803EC692BD4597F03F0E.e.8/click HTTP/1.1" 200 0
+[35mDEBUG   [0m selenium.webdriver.remote.remote_connection:remote_connection.py:330 Remote response: status=200 | data={"value":null} | headers=HTTPHeaderDict({'Content-Length': '14', 'Content-Type': 'application/json; charset=utf-8', 'cache-control': 'no-cache'})
+[35mDEBUG   [0m selenium.webdriver.remote.remote_connection:remote_connection.py:357 Finished Request
+[32mINFO    [0m root:base.py:18 通过xpath定位,元素是//*[@id='app']/div/div[1]/div[3]/div/div[2]
+[35mDEBUG   [0m selenium.webdriver.remote.remote_connection:remote_connection.py:301 POST http://localhost:63169/session/0d5b7672cc1ae611982e812160f1962c/element {'using': 'xpath', 'value': "//*[@id='app']/div/div[1]/div[3]/div/div[2]"}
+[35mDEBUG   [0m urllib3.connectionpool:connectionpool.py:549 http://localhost:63169 "POST /session/0d5b7672cc1ae611982e812160f1962c/element HTTP/1.1" 200 0
+[35mDEBUG   [0m selenium.webdriver.remote.remote_connection:remote_connection.py:330 Remote response: status=200 | data={"value":{"element-6066-11e4-a52e-4f735466cecf":"f.926085B246BB9B4630751145BCA91F84.d.3EF5EA37938A803EC692BD4597F03F0E.e.36"}} | headers=HTTPHeaderDict({'Content-Length': '126', 'Content-Type': 'application/json; charset=utf-8', 'cache-control': 'no-cache'})
+[35mDEBUG   [0m selenium.webdriver.remote.remote_connection:remote_connection.py:357 Finished Request
+[35mDEBUG   [0m selenium.webdriver.remote.remote_connection:remote_connection.py:301 GET http://localhost:63169/session/0d5b7672cc1ae611982e812160f1962c/element/f.926085B246BB9B4630751145BCA91F84.d.3EF5EA37938A803EC692BD4597F03F0E.e.36/text {}
+[35mDEBUG   [0m urllib3.connectionpool:connectionpool.py:549 http://localhost:63169 "GET /session/0d5b7672cc1ae611982e812160f1962c/element/f.926085B246BB9B4630751145BCA91F84.d.3EF5EA37938A803EC692BD4597F03F0E.e.36/text HTTP/1.1" 200 0
+[35mDEBUG   [0m selenium.webdriver.remote.remote_connection:remote_connection.py:330 Remote response: status=200 | data={"value":"admin"} | headers=HTTPHeaderDict({'Content-Length': '17', 'Content-Type': 'application/json; charset=utf-8', 'cache-control': 'no-cache'})
+[35mDEBUG   [0m selenium.webdriver.remote.remote_connection:remote_connection.py:357 Finished Request
+[32mINFO    [0m root:base.py:18 通过xpath定位,元素是//a[@href='#/course']
+[35mDEBUG   [0m selenium.webdriver.remote.remote_connection:remote_connection.py:301 POST http://localhost:63169/session/0d5b7672cc1ae611982e812160f1962c/element {'using': 'xpath', 'value': "//a[@href='#/course']"}
+[35mDEBUG   [0m urllib3.connectionpool:connectionpool.py:549 http://localhost:63169 "POST /session/0d5b7672cc1ae611982e812160f1962c/element HTTP/1.1" 200 0
+[35mDEBUG   [0m selenium.webdriver.remote.remote_connection:remote_connection.py:330 Remote response: status=200 | data={"value":{"element-6066-11e4-a52e-4f735466cecf":"f.926085B246BB9B4630751145BCA91F84.d.3EF5EA37938A803EC692BD4597F03F0E.e.37"}} | headers=HTTPHeaderDict({'Content-Length': '126', 'Content-Type': 'application/json; charset=utf-8', 'cache-control': 'no-cache'})
+[35mDEBUG   [0m selenium.webdriver.remote.remote_connection:remote_connection.py:357 Finished Request
+[35mDEBUG   [0m selenium.webdriver.remote.remote_connection:remote_connection.py:301 POST http://localhost:63169/session/0d5b7672cc1ae611982e812160f1962c/element/f.926085B246BB9B4630751145BCA91F84.d.3EF5EA37938A803EC692BD4597F03F0E.e.37/click {}
+[35mDEBUG   [0m urllib3.connectionpool:connectionpool.py:549 http://localhost:63169 "POST /session/0d5b7672cc1ae611982e812160f1962c/element/f.926085B246BB9B4630751145BCA91F84.d.3EF5EA37938A803EC692BD4597F03F0E.e.37/click HTTP/1.1" 200 0
+[35mDEBUG   [0m selenium.webdriver.remote.remote_connection:remote_connection.py:330 Remote response: status=200 | data={"value":null} | headers=HTTPHeaderDict({'Content-Length': '14', 'Content-Type': 'application/json; charset=utf-8', 'cache-control': 'no-cache'})
+[35mDEBUG   [0m selenium.webdriver.remote.remote_connection:remote_connection.py:357 Finished Request
+[32mINFO    [0m root:base.py:18 通过xpath定位,元素是//span[text()='添加课程']/parent::button
+[35mDEBUG   [0m selenium.webdriver.remote.remote_connection:remote_connection.py:301 POST http://localhost:63169/session/0d5b7672cc1ae611982e812160f1962c/element {'using': 'xpath', 'value': "//span[text()='添加课程']/parent::button"}
+[35mDEBUG   [0m urllib3.connectionpool:connectionpool.py:549 http://localhost:63169 "POST /session/0d5b7672cc1ae611982e812160f1962c/element HTTP/1.1" 200 0
+[35mDEBUG   [0m selenium.webdriver.remote.remote_connection:remote_connection.py:330 Remote response: status=200 | data={"value":{"element-6066-11e4-a52e-4f735466cecf":"f.926085B246BB9B4630751145BCA91F84.d.3EF5EA37938A803EC692BD4597F03F0E.e.40"}} | headers=HTTPHeaderDict({'Content-Length': '126', 'Content-Type': 'application/json; charset=utf-8', 'cache-control': 'no-cache'})
+[35mDEBUG   [0m selenium.webdriver.remote.remote_connection:remote_connection.py:357 Finished Request
+[35mDEBUG   [0m selenium.webdriver.remote.remote_connection:remote_connection.py:301 POST http://localhost:63169/session/0d5b7672cc1ae611982e812160f1962c/element/f.926085B246BB9B4630751145BCA91F84.d.3EF5EA37938A803EC692BD4597F03F0E.e.40/click {}
+[35mDEBUG   [0m urllib3.connectionpool:connectionpool.py:549 http://localhost:63169 "POST /session/0d5b7672cc1ae611982e812160f1962c/element/f.926085B246BB9B4630751145BCA91F84.d.3EF5EA37938A803EC692BD4597F03F0E.e.40/click HTTP/1.1" 200 0
+[35mDEBUG   [0m selenium.webdriver.remote.remote_connection:remote_connection.py:330 Remote response: status=200 | data={"value":null} | headers=HTTPHeaderDict({'Content-Length': '14', 'Content-Type': 'application/json; charset=utf-8', 'cache-control': 'no-cache'})
+[35mDEBUG   [0m selenium.webdriver.remote.remote_connection:remote_connection.py:357 Finished Request
+[32mINFO    [0m root:base.py:18 通过xpath定位,元素是//div/following-sibling::div/form/descendant::input[@placeholder='请选择课程学科']
+[35mDEBUG   [0m selenium.webdriver.remote.remote_connection:remote_connection.py:301 POST http://localhost:63169/session/0d5b7672cc1ae611982e812160f1962c/element {'using': 'xpath', 'value': "//div/following-sibling::div/form/descendant::input[@placeholder='请选择课程学科']"}
+[35mDEBUG   [0m urllib3.connectionpool:connectionpool.py:549 http://localhost:63169 "POST /session/0d5b7672cc1ae611982e812160f1962c/element HTTP/1.1" 200 0
+[35mDEBUG   [0m selenium.webdriver.remote.remote_connection:remote_connection.py:330 Remote response: status=200 | data={"value":{"element-6066-11e4-a52e-4f735466cecf":"f.926085B246BB9B4630751145BCA91F84.d.3EF5EA37938A803EC692BD4597F03F0E.e.41"}} | headers=HTTPHeaderDict({'Content-Length': '126', 'Content-Type': 'application/json; charset=utf-8', 'cache-control': 'no-cache'})
+[35mDEBUG   [0m selenium.webdriver.remote.remote_connection:remote_connection.py:357 Finished Request
+[35mDEBUG   [0m selenium.webdriver.remote.remote_connection:remote_connection.py:301 POST http://localhost:63169/session/0d5b7672cc1ae611982e812160f1962c/element/f.926085B246BB9B4630751145BCA91F84.d.3EF5EA37938A803EC692BD4597F03F0E.e.41/click {}
+[35mDEBUG   [0m urllib3.connectionpool:connectionpool.py:549 http://localhost:63169 "POST /session/0d5b7672cc1ae611982e812160f1962c/element/f.926085B246BB9B4630751145BCA91F84.d.3EF5EA37938A803EC692BD4597F03F0E.e.41/click HTTP/1.1" 200 0
+[35mDEBUG   [0m selenium.webdriver.remote.remote_connection:remote_connection.py:330 Remote response: status=200 | data={"value":null} | headers=HTTPHeaderDict({'Content-Length': '14', 'Content-Type': 'application/json; charset=utf-8', 'cache-control': 'no-cache'})
+[35mDEBUG   [0m selenium.webdriver.remote.remote_connection:remote_connection.py:357 Finished Request
+[32mINFO    [0m root:base.py:18 通过xpath定位,元素是//body/div/div/div/ul/li/span[text()='Python']/parent::li
+[35mDEBUG   [0m selenium.webdriver.remote.remote_connection:remote_connection.py:301 POST http://localhost:63169/session/0d5b7672cc1ae611982e812160f1962c/element {'using': 'xpath', 'value': "//body/div/div/div/ul/li/span[text()='Python']/parent::li"}
+[35mDEBUG   [0m urllib3.connectionpool:connectionpool.py:549 http://localhost:63169 "POST /session/0d5b7672cc1ae611982e812160f1962c/element HTTP/1.1" 200 0
+[35mDEBUG   [0m selenium.webdriver.remote.remote_connection:remote_connection.py:330 Remote response: status=200 | data={"value":{"element-6066-11e4-a52e-4f735466cecf":"f.926085B246BB9B4630751145BCA91F84.d.3EF5EA37938A803EC692BD4597F03F0E.e.308"}} | headers=HTTPHeaderDict({'Content-Length': '127', 'Content-Type': 'application/json; charset=utf-8', 'cache-control': 'no-cache'})
+[35mDEBUG   [0m selenium.webdriver.remote.remote_connection:remote_connection.py:357 Finished Request
+[35mDEBUG   [0m selenium.webdriver.remote.remote_connection:remote_connection.py:301 POST http://localhost:63169/session/0d5b7672cc1ae611982e812160f1962c/element/f.926085B246BB9B4630751145BCA91F84.d.3EF5EA37938A803EC692BD4597F03F0E.e.308/click {}
+[35mDEBUG   [0m urllib3.connectionpool:connectionpool.py:549 http://localhost:63169 "POST /session/0d5b7672cc1ae611982e812160f1962c/element/f.926085B246BB9B4630751145BCA91F84.d.3EF5EA37938A803EC692BD4597F03F0E.e.308/click HTTP/1.1" 200 0
+[35mDEBUG   [0m selenium.webdriver.remote.remote_connection:remote_connection.py:330 Remote response: status=200 | data={"value":null} | headers=HTTPHeaderDict({'Content-Length': '14', 'Content-Type': 'application/json; charset=utf-8', 'cache-control': 'no-cache'})
+[35mDEBUG   [0m selenium.webdriver.remote.remote_connection:remote_connection.py:357 Finished Request
+[32mINFO    [0m root:base.py:18 通过xpath定位,元素是//div/following-sibling::div/form/div[2]/descendant::input
+[35mDEBUG   [0m selenium.webdriver.remote.remote_connection:remote_connection.py:301 POST http://localhost:63169/session/0d5b7672cc1ae611982e812160f1962c/element {'using': 'xpath', 'value': '//div/following-sibling::div/form/div[2]/descendant::input'}
+[35mDEBUG   [0m urllib3.connectionpool:connectionpool.py:549 http://localhost:63169 "POST /session/0d5b7672cc1ae611982e812160f1962c/element HTTP/1.1" 200 0
+[35mDEBUG   [0m selenium.webdriver.remote.remote_connection:remote_connection.py:330 Remote response: status=200 | data={"value":{"element-6066-11e4-a52e-4f735466cecf":"f.926085B246BB9B4630751145BCA91F84.d.3EF5EA37938A803EC692BD4597F03F0E.e.52"}} | headers=HTTPHeaderDict({'Content-Length': '126', 'Content-Type': 'application/json; charset=utf-8', 'cache-control': 'no-cache'})
+[35mDEBUG   [0m selenium.webdriver.remote.remote_connection:remote_connection.py:357 Finished Request
+[35mDEBUG   [0m selenium.webdriver.remote.remote_connection:remote_connection.py:301 POST http://localhost:63169/session/0d5b7672cc1ae611982e812160f1962c/element/f.926085B246BB9B4630751145BCA91F84.d.3EF5EA37938A803EC692BD4597F03F0E.e.52/value {'text': '测试1001', 'value': ['测', '试', '1', '0', '0', '1']}
+[35mDEBUG   [0m urllib3.connectionpool:connectionpool.py:549 http://localhost:63169 "POST /session/0d5b7672cc1ae611982e812160f1962c/element/f.926085B246BB9B4630751145BCA91F84.d.3EF5EA37938A803EC692BD4597F03F0E.e.52/value HTTP/1.1" 200 0
+[35mDEBUG   [0m selenium.webdriver.remote.remote_connection:remote_connection.py:330 Remote response: status=200 | data={"value":null} | headers=HTTPHeaderDict({'Content-Length': '14', 'Content-Type': 'application/json; charset=utf-8', 'cache-control': 'no-cache'})
+[35mDEBUG   [0m selenium.webdriver.remote.remote_connection:remote_connection.py:357 Finished Request
+[32mINFO    [0m root:base.py:18 通过xpath定位,元素是//input[@placeholder='请选择适应人群']
+[35mDEBUG   [0m selenium.webdriver.remote.remote_connection:remote_connection.py:301 POST http://localhost:63169/session/0d5b7672cc1ae611982e812160f1962c/element {'using': 'xpath', 'value': "//input[@placeholder='请选择适应人群']"}
+[35mDEBUG   [0m urllib3.connectionpool:connectionpool.py:549 http://localhost:63169 "POST /session/0d5b7672cc1ae611982e812160f1962c/element HTTP/1.1" 200 0
+[35mDEBUG   [0m selenium.webdriver.remote.remote_connection:remote_connection.py:330 Remote response: status=200 | data={"value":{"element-6066-11e4-a52e-4f735466cecf":"f.926085B246BB9B4630751145BCA91F84.d.3EF5EA37938A803EC692BD4597F03F0E.e.53"}} | headers=HTTPHeaderDict({'Content-Length': '126', 'Content-Type': 'application/json; charset=utf-8', 'cache-control': 'no-cache'})
+[35mDEBUG   [0m selenium.webdriver.remote.remote_connection:remote_connection.py:357 Finished Request
+[35mDEBUG   [0m selenium.webdriver.remote.remote_connection:remote_connection.py:301 POST http://localhost:63169/session/0d5b7672cc1ae611982e812160f1962c/element/f.926085B246BB9B4630751145BCA91F84.d.3EF5EA37938A803EC692BD4597F03F0E.e.53/click {}
+[35mDEBUG   [0m urllib3.connectionpool:connectionpool.py:549 http://localhost:63169 "POST /session/0d5b7672cc1ae611982e812160f1962c/element/f.926085B246BB9B4630751145BCA91F84.d.3EF5EA37938A803EC692BD4597F03F0E.e.53/click HTTP/1.1" 200 0
+[35mDEBUG   [0m selenium.webdriver.remote.remote_connection:remote_connection.py:330 Remote response: status=200 | data={"value":null} | headers=HTTPHeaderDict({'Content-Length': '14', 'Content-Type': 'application/json; charset=utf-8', 'cache-control': 'no-cache'})
+[35mDEBUG   [0m selenium.webdriver.remote.remote_connection:remote_connection.py:357 Finished Request
+[32mINFO    [0m root:base.py:18 通过xpath定位,元素是//body/div/div/div/ul/li/span[text()='小白学员']/parent::li
+[35mDEBUG   [0m selenium.webdriver.remote.remote_connection:remote_connection.py:301 POST http://localhost:63169/session/0d5b7672cc1ae611982e812160f1962c/element {'using': 'xpath', 'value': "//body/div/div/div/ul/li/span[text()='小白学员']/parent::li"}
+[35mDEBUG   [0m urllib3.connectionpool:connectionpool.py:549 http://localhost:63169 "POST /session/0d5b7672cc1ae611982e812160f1962c/element HTTP/1.1" 200 0
+[35mDEBUG   [0m selenium.webdriver.remote.remote_connection:remote_connection.py:330 Remote response: status=200 | data={"value":{"element-6066-11e4-a52e-4f735466cecf":"f.926085B246BB9B4630751145BCA91F84.d.3EF5EA37938A803EC692BD4597F03F0E.e.311"}} | headers=HTTPHeaderDict({'Content-Length': '127', 'Content-Type': 'application/json; charset=utf-8', 'cache-control': 'no-cache'})
+[35mDEBUG   [0m selenium.webdriver.remote.remote_connection:remote_connection.py:357 Finished Request
+[35mDEBUG   [0m selenium.webdriver.remote.remote_connection:remote_connection.py:301 POST http://localhost:63169/session/0d5b7672cc1ae611982e812160f1962c/element/f.926085B246BB9B4630751145BCA91F84.d.3EF5EA37938A803EC692BD4597F03F0E.e.311/click {}
+[35mDEBUG   [0m urllib3.connectionpool:connectionpool.py:549 http://localhost:63169 "POST /session/0d5b7672cc1ae611982e812160f1962c/element/f.926085B246BB9B4630751145BCA91F84.d.3EF5EA37938A803EC692BD4597F03F0E.e.311/click HTTP/1.1" 200 0
+[35mDEBUG   [0m selenium.webdriver.remote.remote_connection:remote_connection.py:330 Remote response: status=200 | data={"value":null} | headers=HTTPHeaderDict({'Content-Length': '14', 'Content-Type': 'application/json; charset=utf-8', 'cache-control': 'no-cache'})
+[35mDEBUG   [0m selenium.webdriver.remote.remote_connection:remote_connection.py:357 Finished Request
+[32mINFO    [0m root:base.py:18 通过xpath定位,元素是//input[@placeholder='请输入课程价格']
+[35mDEBUG   [0m selenium.webdriver.remote.remote_connection:remote_connection.py:301 POST http://localhost:63169/session/0d5b7672cc1ae611982e812160f1962c/element {'using': 'xpath', 'value': "//input[@placeholder='请输入课程价格']"}
+[35mDEBUG   [0m urllib3.connectionpool:connectionpool.py:549 http://localhost:63169 "POST /session/0d5b7672cc1ae611982e812160f1962c/element HTTP/1.1" 200 0
+[35mDEBUG   [0m selenium.webdriver.remote.remote_connection:remote_connection.py:330 Remote response: status=200 | data={"value":{"element-6066-11e4-a52e-4f735466cecf":"f.926085B246BB9B4630751145BCA91F84.d.3EF5EA37938A803EC692BD4597F03F0E.e.54"}} | headers=HTTPHeaderDict({'Content-Length': '126', 'Content-Type': 'application/json; charset=utf-8', 'cache-control': 'no-cache'})
+[35mDEBUG   [0m selenium.webdriver.remote.remote_connection:remote_connection.py:357 Finished Request
+[35mDEBUG   [0m selenium.webdriver.remote.remote_connection:remote_connection.py:301 POST http://localhost:63169/session/0d5b7672cc1ae611982e812160f1962c/element/f.926085B246BB9B4630751145BCA91F84.d.3EF5EA37938A803EC692BD4597F03F0E.e.54/value {'text': '1000', 'value': ['1', '0', '0', '0']}
+[35mDEBUG   [0m urllib3.connectionpool:connectionpool.py:549 http://localhost:63169 "POST /session/0d5b7672cc1ae611982e812160f1962c/element/f.926085B246BB9B4630751145BCA91F84.d.3EF5EA37938A803EC692BD4597F03F0E.e.54/value HTTP/1.1" 200 0
+[35mDEBUG   [0m selenium.webdriver.remote.remote_connection:remote_connection.py:330 Remote response: status=200 | data={"value":null} | headers=HTTPHeaderDict({'Content-Length': '14', 'Content-Type': 'application/json; charset=utf-8', 'cache-control': 'no-cache'})
+[35mDEBUG   [0m selenium.webdriver.remote.remote_connection:remote_connection.py:357 Finished Request
+[32mINFO    [0m root:base.py:18 通过xpath定位,元素是//textarea[@placeholder='请输入课程介绍']
+[35mDEBUG   [0m selenium.webdriver.remote.remote_connection:remote_connection.py:301 POST http://localhost:63169/session/0d5b7672cc1ae611982e812160f1962c/element {'using': 'xpath', 'value': "//textarea[@placeholder='请输入课程介绍']"}
+[35mDEBUG   [0m urllib3.connectionpool:connectionpool.py:549 http://localhost:63169 "POST /session/0d5b7672cc1ae611982e812160f1962c/element HTTP/1.1" 200 0
+[35mDEBUG   [0m selenium.webdriver.remote.remote_connection:remote_connection.py:330 Remote response: status=200 | data={"value":{"element-6066-11e4-a52e-4f735466cecf":"f.926085B246BB9B4630751145BCA91F84.d.3EF5EA37938A803EC692BD4597F03F0E.e.55"}} | headers=HTTPHeaderDict({'Content-Length': '126', 'Content-Type': 'application/json; charset=utf-8', 'cache-control': 'no-cache'})
+[35mDEBUG   [0m selenium.webdriver.remote.remote_connection:remote_connection.py:357 Finished Request
+[35mDEBUG   [0m selenium.webdriver.remote.remote_connection:remote_connection.py:301 POST http://localhost:63169/session/0d5b7672cc1ae611982e812160f1962c/element/f.926085B246BB9B4630751145BCA91F84.d.3EF5EA37938A803EC692BD4597F03F0E.e.55/value {'text': '测试用的', 'value': ['测', '试', '用', '的']}
+[35mDEBUG   [0m urllib3.connectionpool:connectionpool.py:549 http://localhost:63169 "POST /session/0d5b7672cc1ae611982e812160f1962c/element/f.926085B246BB9B4630751145BCA91F84.d.3EF5EA37938A803EC692BD4597F03F0E.e.55/value HTTP/1.1" 200 0
+[35mDEBUG   [0m selenium.webdriver.remote.remote_connection:remote_connection.py:330 Remote response: status=200 | data={"value":null} | headers=HTTPHeaderDict({'Content-Length': '14', 'Content-Type': 'application/json; charset=utf-8', 'cache-control': 'no-cache'})
+[35mDEBUG   [0m selenium.webdriver.remote.remote_connection:remote_connection.py:357 Finished Request
+[32mINFO    [0m root:base.py:18 通过xpath定位,元素是//span[text()='确 定']/parent::button
+[35mDEBUG   [0m selenium.webdriver.remote.remote_connection:remote_connection.py:301 POST http://localhost:63169/session/0d5b7672cc1ae611982e812160f1962c/element {'using': 'xpath', 'value': "//span[text()='确 定']/parent::button"}
+[35mDEBUG   [0m urllib3.connectionpool:connectionpool.py:549 http://localhost:63169 "POST /session/0d5b7672cc1ae611982e812160f1962c/element HTTP/1.1" 200 0
+[35mDEBUG   [0m selenium.webdriver.remote.remote_connection:remote_connection.py:330 Remote response: status=200 | data={"value":{"element-6066-11e4-a52e-4f735466cecf":"f.926085B246BB9B4630751145BCA91F84.d.3EF5EA37938A803EC692BD4597F03F0E.e.314"}} | headers=HTTPHeaderDict({'Content-Length': '127', 'Content-Type': 'application/json; charset=utf-8', 'cache-control': 'no-cache'})
+[35mDEBUG   [0m selenium.webdriver.remote.remote_connection:remote_connection.py:357 Finished Request
+[35mDEBUG   [0m selenium.webdriver.remote.remote_connection:remote_connection.py:301 POST http://localhost:63169/session/0d5b7672cc1ae611982e812160f1962c/element/f.926085B246BB9B4630751145BCA91F84.d.3EF5EA37938A803EC692BD4597F03F0E.e.314/click {}
+[35mDEBUG   [0m urllib3.connectionpool:connectionpool.py:549 http://localhost:63169 "POST /session/0d5b7672cc1ae611982e812160f1962c/element/f.926085B246BB9B4630751145BCA91F84.d.3EF5EA37938A803EC692BD4597F03F0E.e.314/click HTTP/1.1" 200 0
+[35mDEBUG   [0m selenium.webdriver.remote.remote_connection:remote_connection.py:330 Remote response: status=200 | data={"value":null} | headers=HTTPHeaderDict({'Content-Length': '14', 'Content-Type': 'application/json; charset=utf-8', 'cache-control': 'no-cache'})
+[35mDEBUG   [0m selenium.webdriver.remote.remote_connection:remote_connection.py:357 Finished Request
+[32mINFO    [0m root:base.py:18 通过xpath定位,元素是//div[@role='alert']/p
+[35mDEBUG   [0m selenium.webdriver.remote.remote_connection:remote_connection.py:301 POST http://localhost:63169/session/0d5b7672cc1ae611982e812160f1962c/element {'using': 'xpath', 'value': "//div[@role='alert']/p"}
+[35mDEBUG   [0m urllib3.connectionpool:connectionpool.py:549 http://localhost:63169 "POST /session/0d5b7672cc1ae611982e812160f1962c/element HTTP/1.1" 200 0
+[35mDEBUG   [0m selenium.webdriver.remote.remote_connection:remote_connection.py:330 Remote response: status=200 | data={"value":{"element-6066-11e4-a52e-4f735466cecf":"f.926085B246BB9B4630751145BCA91F84.d.3EF5EA37938A803EC692BD4597F03F0E.e.315"}} | headers=HTTPHeaderDict({'Content-Length': '127', 'Content-Type': 'application/json; charset=utf-8', 'cache-control': 'no-cache'})
+[35mDEBUG   [0m selenium.webdriver.remote.remote_connection:remote_connection.py:357 Finished Request
+[35mDEBUG   [0m selenium.webdriver.remote.remote_connection:remote_connection.py:301 GET http://localhost:63169/session/0d5b7672cc1ae611982e812160f1962c/element/f.926085B246BB9B4630751145BCA91F84.d.3EF5EA37938A803EC692BD4597F03F0E.e.315/text {}
+[35mDEBUG   [0m urllib3.connectionpool:connectionpool.py:549 http://localhost:63169 "GET /session/0d5b7672cc1ae611982e812160f1962c/element/f.926085B246BB9B4630751145BCA91F84.d.3EF5EA37938A803EC692BD4597F03F0E.e.315/text HTTP/1.1" 200 0
+[35mDEBUG   [0m selenium.webdriver.remote.remote_connection:remote_connection.py:330 Remote response: status=200 | data={"value":""} | headers=HTTPHeaderDict({'Content-Length': '12', 'Content-Type': 'application/json; charset=utf-8', 'cache-control': 'no-cache'})
+[35mDEBUG   [0m selenium.webdriver.remote.remote_connection:remote_connection.py:357 Finished Request</pre>
+                                </div>
+                                <div class="tab-pane fade" role="tabpanel" aria-labelledby="contact-tab">
+                                    <pre style="line-height: 18px">正在启动浏览器:Edge
+E:\page_object/logs/2024_04_10_log.log
+admin
+E:\page_object/logs/2024_04_10_log.log
+('xpath', "//body/div/div/div/ul/li/span[text()='Python']/parent::li")
+
+</pre>
+                                </div>
+                                
+                                <div class="tab-pane fade " role="tabpanel" aria-labelledby="home-tab">
+                                    <pre style="line-height: 18px">browser = <selenium.webdriver.edge.webdriver.WebDriver (session="0d5b7672cc1ae611982e812160f1962c")>
+
+    @pytest.mark.run(order=1)
+    def test_02(browser):
+        course = CoursePage(browser)
+        res = course.add_course()
+>       assert "失败" in res
+E       AssertionError: assert '失败' in ''
+
+testcases\test_001.py:53: AssertionError</pre>
+                                </div>
+                                
+                                
+
+
+                            </div>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+            
+            <tr >
+
+
+                <td>2</td>
+                <td class="testcasestest_001py">testcases\test_001.py</td>
+                <td>test_01</td>
+                <td>None</td>
+                <td>2.870054</td>
+                
+                    
+                    <td class="text-success">通过</td>
+                    
+                
+                <td>
+                    <button type="button" class="btn btn-success btn_info">查看详情</button>
+                </td>
+            </tr>
+            <tr class="test_log">
+                <td colspan="7" class="small text-muted" style=" word-wrap:break-word; word-break:break-all;padding: 0">
+                    <div class="card">
+                        <div class="card-body">
+                            <ul class="nav nav-tabs" role="tablist">
+                                <li class="nav-item" role="presentation">
+                                    <a class="nav-link active" data-toggle="tab" role="tab" aria-controls="home"
+                                       aria-selected="true" style="padding: 0 16px">运行日志</a>
+                                </li>
+                                <li class="nav-item" role="presentation">
+                                    <a class="nav-link" data-toggle="tab" role="tab" aria-controls="profile"
+                                       aria-selected="false" style="padding: 0 16px">调试输出</a>
+                                </li>
+                                
+                                
+
+                            </ul>
+                            <div class="tab-content" style="height: 300px;overflow-y: auto;padding: 20px">
+
+                                <div class="tab-pane fade show active" role="tabpanel" aria-labelledby="profile-tab">
+                                    <pre style="line-height: 18px">[32mINFO    [0m root:base.py:18 通过xpath定位,元素是//a[@href='#/course']
+[35mDEBUG   [0m selenium.webdriver.remote.remote_connection:remote_connection.py:301 POST http://localhost:63169/session/0d5b7672cc1ae611982e812160f1962c/element {'using': 'xpath', 'value': "//a[@href='#/course']"}
+[35mDEBUG   [0m urllib3.connectionpool:connectionpool.py:549 http://localhost:63169 "POST /session/0d5b7672cc1ae611982e812160f1962c/element HTTP/1.1" 200 0
+[35mDEBUG   [0m selenium.webdriver.remote.remote_connection:remote_connection.py:330 Remote response: status=200 | data={"value":{"element-6066-11e4-a52e-4f735466cecf":"f.926085B246BB9B4630751145BCA91F84.d.3EF5EA37938A803EC692BD4597F03F0E.e.37"}} | headers=HTTPHeaderDict({'Content-Length': '126', 'Content-Type': 'application/json; charset=utf-8', 'cache-control': 'no-cache'})
+[35mDEBUG   [0m selenium.webdriver.remote.remote_connection:remote_connection.py:357 Finished Request
+[35mDEBUG   [0m selenium.webdriver.remote.remote_connection:remote_connection.py:301 POST http://localhost:63169/session/0d5b7672cc1ae611982e812160f1962c/element/f.926085B246BB9B4630751145BCA91F84.d.3EF5EA37938A803EC692BD4597F03F0E.e.37/click {}
+[35mDEBUG   [0m urllib3.connectionpool:connectionpool.py:549 http://localhost:63169 "POST /session/0d5b7672cc1ae611982e812160f1962c/element/f.926085B246BB9B4630751145BCA91F84.d.3EF5EA37938A803EC692BD4597F03F0E.e.37/click HTTP/1.1" 200 0
+[35mDEBUG   [0m selenium.webdriver.remote.remote_connection:remote_connection.py:330 Remote response: status=200 | data={"value":null} | headers=HTTPHeaderDict({'Content-Length': '14', 'Content-Type': 'application/json; charset=utf-8', 'cache-control': 'no-cache'})
+[35mDEBUG   [0m selenium.webdriver.remote.remote_connection:remote_connection.py:357 Finished Request
+[32mINFO    [0m root:base.py:18 通过xpath定位,元素是//input[@placeholder='请输入课程名称']
+[35mDEBUG   [0m selenium.webdriver.remote.remote_connection:remote_connection.py:301 POST http://localhost:63169/session/0d5b7672cc1ae611982e812160f1962c/element {'using': 'xpath', 'value': "//input[@placeholder='请输入课程名称']"}
+[35mDEBUG   [0m urllib3.connectionpool:connectionpool.py:549 http://localhost:63169 "POST /session/0d5b7672cc1ae611982e812160f1962c/element HTTP/1.1" 200 0
+[35mDEBUG   [0m selenium.webdriver.remote.remote_connection:remote_connection.py:330 Remote response: status=200 | data={"value":{"element-6066-11e4-a52e-4f735466cecf":"f.926085B246BB9B4630751145BCA91F84.d.3EF5EA37938A803EC692BD4597F03F0E.e.45"}} | headers=HTTPHeaderDict({'Content-Length': '126', 'Content-Type': 'application/json; charset=utf-8', 'cache-control': 'no-cache'})
+[35mDEBUG   [0m selenium.webdriver.remote.remote_connection:remote_connection.py:357 Finished Request
+[35mDEBUG   [0m selenium.webdriver.remote.remote_connection:remote_connection.py:301 POST http://localhost:63169/session/0d5b7672cc1ae611982e812160f1962c/element/f.926085B246BB9B4630751145BCA91F84.d.3EF5EA37938A803EC692BD4597F03F0E.e.45/value {'text': 'python语言', 'value': ['p', 'y', 't', 'h', 'o', 'n', '语', '言']}
+[35mDEBUG   [0m urllib3.connectionpool:connectionpool.py:549 http://localhost:63169 "POST /session/0d5b7672cc1ae611982e812160f1962c/element/f.926085B246BB9B4630751145BCA91F84.d.3EF5EA37938A803EC692BD4597F03F0E.e.45/value HTTP/1.1" 200 0
+[35mDEBUG   [0m selenium.webdriver.remote.remote_connection:remote_connection.py:330 Remote response: status=200 | data={"value":null} | headers=HTTPHeaderDict({'Content-Length': '14', 'Content-Type': 'application/json; charset=utf-8', 'cache-control': 'no-cache'})
+[35mDEBUG   [0m selenium.webdriver.remote.remote_connection:remote_connection.py:357 Finished Request
+[32mINFO    [0m root:base.py:18 通过xpath定位,元素是//span[text()='搜索']/parent::button
+[35mDEBUG   [0m selenium.webdriver.remote.remote_connection:remote_connection.py:301 POST http://localhost:63169/session/0d5b7672cc1ae611982e812160f1962c/element {'using': 'xpath', 'value': "//span[text()='搜索']/parent::button"}
+[35mDEBUG   [0m urllib3.connectionpool:connectionpool.py:549 http://localhost:63169 "POST /session/0d5b7672cc1ae611982e812160f1962c/element HTTP/1.1" 200 0
+[35mDEBUG   [0m selenium.webdriver.remote.remote_connection:remote_connection.py:330 Remote response: status=200 | data={"value":{"element-6066-11e4-a52e-4f735466cecf":"f.926085B246BB9B4630751145BCA91F84.d.3EF5EA37938A803EC692BD4597F03F0E.e.318"}} | headers=HTTPHeaderDict({'Content-Length': '127', 'Content-Type': 'application/json; charset=utf-8', 'cache-control': 'no-cache'})
+[35mDEBUG   [0m selenium.webdriver.remote.remote_connection:remote_connection.py:357 Finished Request
+[35mDEBUG   [0m selenium.webdriver.remote.remote_connection:remote_connection.py:301 POST http://localhost:63169/session/0d5b7672cc1ae611982e812160f1962c/element/f.926085B246BB9B4630751145BCA91F84.d.3EF5EA37938A803EC692BD4597F03F0E.e.318/click {}
+[35mDEBUG   [0m urllib3.connectionpool:connectionpool.py:549 http://localhost:63169 "POST /session/0d5b7672cc1ae611982e812160f1962c/element/f.926085B246BB9B4630751145BCA91F84.d.3EF5EA37938A803EC692BD4597F03F0E.e.318/click HTTP/1.1" 200 0
+[35mDEBUG   [0m selenium.webdriver.remote.remote_connection:remote_connection.py:330 Remote response: status=200 | data={"value":null} | headers=HTTPHeaderDict({'Content-Length': '14', 'Content-Type': 'application/json; charset=utf-8', 'cache-control': 'no-cache'})
+[35mDEBUG   [0m selenium.webdriver.remote.remote_connection:remote_connection.py:357 Finished Request
+[32mINFO    [0m root:base.py:18 通过xpath定位,元素是//span[text()='修改']/parent::button
+[35mDEBUG   [0m selenium.webdriver.remote.remote_connection:remote_connection.py:301 POST http://localhost:63169/session/0d5b7672cc1ae611982e812160f1962c/element {'using': 'xpath', 'value': "//span[text()='修改']/parent::button"}
+[35mDEBUG   [0m urllib3.connectionpool:connectionpool.py:549 http://localhost:63169 "POST /session/0d5b7672cc1ae611982e812160f1962c/element HTTP/1.1" 200 0
+[35mDEBUG   [0m selenium.webdriver.remote.remote_connection:remote_connection.py:330 Remote response: status=200 | data={"value":{"element-6066-11e4-a52e-4f735466cecf":"f.926085B246BB9B4630751145BCA91F84.d.3EF5EA37938A803EC692BD4597F03F0E.e.100"}} | headers=HTTPHeaderDict({'Content-Length': '127', 'Content-Type': 'application/json; charset=utf-8', 'cache-control': 'no-cache'})
+[35mDEBUG   [0m selenium.webdriver.remote.remote_connection:remote_connection.py:357 Finished Request
+[35mDEBUG   [0m selenium.webdriver.remote.remote_connection:remote_connection.py:301 POST http://localhost:63169/session/0d5b7672cc1ae611982e812160f1962c/element/f.926085B246BB9B4630751145BCA91F84.d.3EF5EA37938A803EC692BD4597F03F0E.e.100/click {}
+[35mDEBUG   [0m urllib3.connectionpool:connectionpool.py:549 http://localhost:63169 "POST /session/0d5b7672cc1ae611982e812160f1962c/element/f.926085B246BB9B4630751145BCA91F84.d.3EF5EA37938A803EC692BD4597F03F0E.e.100/click HTTP/1.1" 200 0
+[35mDEBUG   [0m selenium.webdriver.remote.remote_connection:remote_connection.py:330 Remote response: status=200 | data={"value":null} | headers=HTTPHeaderDict({'Content-Length': '14', 'Content-Type': 'application/json; charset=utf-8', 'cache-control': 'no-cache'})
+[35mDEBUG   [0m selenium.webdriver.remote.remote_connection:remote_connection.py:357 Finished Request
+[32mINFO    [0m root:base.py:18 通过xpath定位,元素是//textarea[@placeholder='请输入课程介绍']
+[35mDEBUG   [0m selenium.webdriver.remote.remote_connection:remote_connection.py:301 POST http://localhost:63169/session/0d5b7672cc1ae611982e812160f1962c/element {'using': 'xpath', 'value': "//textarea[@placeholder='请输入课程介绍']"}
+[35mDEBUG   [0m urllib3.connectionpool:connectionpool.py:549 http://localhost:63169 "POST /session/0d5b7672cc1ae611982e812160f1962c/element HTTP/1.1" 200 0
+[35mDEBUG   [0m selenium.webdriver.remote.remote_connection:remote_connection.py:330 Remote response: status=200 | data={"value":{"element-6066-11e4-a52e-4f735466cecf":"f.926085B246BB9B4630751145BCA91F84.d.3EF5EA37938A803EC692BD4597F03F0E.e.55"}} | headers=HTTPHeaderDict({'Content-Length': '126', 'Content-Type': 'application/json; charset=utf-8', 'cache-control': 'no-cache'})
+[35mDEBUG   [0m selenium.webdriver.remote.remote_connection:remote_connection.py:357 Finished Request
+[35mDEBUG   [0m selenium.webdriver.remote.remote_connection:remote_connection.py:301 POST http://localhost:63169/session/0d5b7672cc1ae611982e812160f1962c/element/f.926085B246BB9B4630751145BCA91F84.d.3EF5EA37938A803EC692BD4597F03F0E.e.55/click {}
+[35mDEBUG   [0m urllib3.connectionpool:connectionpool.py:549 http://localhost:63169 "POST /session/0d5b7672cc1ae611982e812160f1962c/element/f.926085B246BB9B4630751145BCA91F84.d.3EF5EA37938A803EC692BD4597F03F0E.e.55/click HTTP/1.1" 200 0
+[35mDEBUG   [0m selenium.webdriver.remote.remote_connection:remote_connection.py:330 Remote response: status=200 | data={"value":null} | headers=HTTPHeaderDict({'Content-Length': '14', 'Content-Type': 'application/json; charset=utf-8', 'cache-control': 'no-cache'})
+[35mDEBUG   [0m selenium.webdriver.remote.remote_connection:remote_connection.py:357 Finished Request
+[32mINFO    [0m root:base.py:18 通过xpath定位,元素是//div/following-sibling::div/form/descendant::input[@placeholder='请选择课程学科']
+[35mDEBUG   [0m selenium.webdriver.remote.remote_connection:remote_connection.py:301 POST http://localhost:63169/session/0d5b7672cc1ae611982e812160f1962c/element {'using': 'xpath', 'value': "//div/following-sibling::div/form/descendant::input[@placeholder='请选择课程学科']"}
+[35mDEBUG   [0m urllib3.connectionpool:connectionpool.py:549 http://localhost:63169 "POST /session/0d5b7672cc1ae611982e812160f1962c/element HTTP/1.1" 200 0
+[35mDEBUG   [0m selenium.webdriver.remote.remote_connection:remote_connection.py:330 Remote response: status=200 | data={"value":{"element-6066-11e4-a52e-4f735466cecf":"f.926085B246BB9B4630751145BCA91F84.d.3EF5EA37938A803EC692BD4597F03F0E.e.41"}} | headers=HTTPHeaderDict({'Content-Length': '126', 'Content-Type': 'application/json; charset=utf-8', 'cache-control': 'no-cache'})
+[35mDEBUG   [0m selenium.webdriver.remote.remote_connection:remote_connection.py:357 Finished Request
+[35mDEBUG   [0m selenium.webdriver.remote.remote_connection:remote_connection.py:301 POST http://localhost:63169/session/0d5b7672cc1ae611982e812160f1962c/execute/sync {'script': '/* getAttribute */return (function(){return (function(){var d=this||self;function f(a,b){function c(...', 'args': [{'element-6066-11e4-a52e-4f735466cecf': 'f.926085B246BB9B4630751145BCA91F84.d.3EF5EA37938A803EC692BD4597F03F0E.e.41'}, 'value']}
+[35mDEBUG   [0m urllib3.connectionpool:connectionpool.py:549 http://localhost:63169 "POST /session/0d5b7672cc1ae611982e812160f1962c/execute/sync HTTP/1.1" 200 0
+[35mDEBUG   [0m selenium.webdriver.remote.remote_connection:remote_connection.py:330 Remote response: status=200 | data={"value":"Python"} | headers=HTTPHeaderDict({'Content-Length': '18', 'Content-Type': 'application/json; charset=utf-8', 'cache-control': 'no-cache'})
+[35mDEBUG   [0m selenium.webdriver.remote.remote_connection:remote_connection.py:357 Finished Request
+[32mINFO    [0m root:base.py:18 通过xpath定位,元素是//div/following-sibling::div/form/div[2]/descendant::input
+[35mDEBUG   [0m selenium.webdriver.remote.remote_connection:remote_connection.py:301 POST http://localhost:63169/session/0d5b7672cc1ae611982e812160f1962c/element {'using': 'xpath', 'value': '//div/following-sibling::div/form/div[2]/descendant::input'}
+[35mDEBUG   [0m urllib3.connectionpool:connectionpool.py:549 http://localhost:63169 "POST /session/0d5b7672cc1ae611982e812160f1962c/element HTTP/1.1" 200 0
+[35mDEBUG   [0m selenium.webdriver.remote.remote_connection:remote_connection.py:330 Remote response: status=200 | data={"value":{"element-6066-11e4-a52e-4f735466cecf":"f.926085B246BB9B4630751145BCA91F84.d.3EF5EA37938A803EC692BD4597F03F0E.e.52"}} | headers=HTTPHeaderDict({'Content-Length': '126', 'Content-Type': 'application/json; charset=utf-8', 'cache-control': 'no-cache'})
+[35mDEBUG   [0m selenium.webdriver.remote.remote_connection:remote_connection.py:357 Finished Request
+[35mDEBUG   [0m selenium.webdriver.remote.remote_connection:remote_connection.py:301 POST http://localhost:63169/session/0d5b7672cc1ae611982e812160f1962c/execute/sync {'script': '/* getAttribute */return (function(){return (function(){var d=this||self;function f(a,b){function c(...', 'args': [{'element-6066-11e4-a52e-4f735466cecf': 'f.926085B246BB9B4630751145BCA91F84.d.3EF5EA37938A803EC692BD4597F03F0E.e.52'}, 'value']}
+[35mDEBUG   [0m urllib3.connectionpool:connectionpool.py:549 http://localhost:63169 "POST /session/0d5b7672cc1ae611982e812160f1962c/execute/sync HTTP/1.1" 200 0
+[35mDEBUG   [0m selenium.webdriver.remote.remote_connection:remote_connection.py:330 Remote response: status=200 | data={"value":"python语言"} | headers=HTTPHeaderDict({'Content-Length': '24', 'Content-Type': 'application/json; charset=utf-8', 'cache-control': 'no-cache'})
+[35mDEBUG   [0m selenium.webdriver.remote.remote_connection:remote_connection.py:357 Finished Request
+[32mINFO    [0m root:base.py:18 通过xpath定位,元素是//input[@placeholder='请选择适应人群']
+[35mDEBUG   [0m selenium.webdriver.remote.remote_connection:remote_connection.py:301 POST http://localhost:63169/session/0d5b7672cc1ae611982e812160f1962c/element {'using': 'xpath', 'value': "//input[@placeholder='请选择适应人群']"}
+[35mDEBUG   [0m urllib3.connectionpool:connectionpool.py:549 http://localhost:63169 "POST /session/0d5b7672cc1ae611982e812160f1962c/element HTTP/1.1" 200 0
+[35mDEBUG   [0m selenium.webdriver.remote.remote_connection:remote_connection.py:330 Remote response: status=200 | data={"value":{"element-6066-11e4-a52e-4f735466cecf":"f.926085B246BB9B4630751145BCA91F84.d.3EF5EA37938A803EC692BD4597F03F0E.e.53"}} | headers=HTTPHeaderDict({'Content-Length': '126', 'Content-Type': 'application/json; charset=utf-8', 'cache-control': 'no-cache'})
+[35mDEBUG   [0m selenium.webdriver.remote.remote_connection:remote_connection.py:357 Finished Request
+[35mDEBUG   [0m selenium.webdriver.remote.remote_connection:remote_connection.py:301 POST http://localhost:63169/session/0d5b7672cc1ae611982e812160f1962c/execute/sync {'script': '/* getAttribute */return (function(){return (function(){var d=this||self;function f(a,b){function c(...', 'args': [{'element-6066-11e4-a52e-4f735466cecf': 'f.926085B246BB9B4630751145BCA91F84.d.3EF5EA37938A803EC692BD4597F03F0E.e.53'}, 'value']}
+[35mDEBUG   [0m urllib3.connectionpool:connectionpool.py:549 http://localhost:63169 "POST /session/0d5b7672cc1ae611982e812160f1962c/execute/sync HTTP/1.1" 200 0
+[35mDEBUG   [0m selenium.webdriver.remote.remote_connection:remote_connection.py:330 Remote response: status=200 | data={"value":"中级程序员"} | headers=HTTPHeaderDict({'Content-Length': '27', 'Content-Type': 'application/json; charset=utf-8', 'cache-control': 'no-cache'})
+[35mDEBUG   [0m selenium.webdriver.remote.remote_connection:remote_connection.py:357 Finished Request
+[32mINFO    [0m root:base.py:18 通过xpath定位,元素是//input[@placeholder='请输入课程价格']
+[35mDEBUG   [0m selenium.webdriver.remote.remote_connection:remote_connection.py:301 POST http://localhost:63169/session/0d5b7672cc1ae611982e812160f1962c/element {'using': 'xpath', 'value': "//input[@placeholder='请输入课程价格']"}
+[35mDEBUG   [0m urllib3.connectionpool:connectionpool.py:549 http://localhost:63169 "POST /session/0d5b7672cc1ae611982e812160f1962c/element HTTP/1.1" 200 0
+[35mDEBUG   [0m selenium.webdriver.remote.remote_connection:remote_connection.py:330 Remote response: status=200 | data={"value":{"element-6066-11e4-a52e-4f735466cecf":"f.926085B246BB9B4630751145BCA91F84.d.3EF5EA37938A803EC692BD4597F03F0E.e.54"}} | headers=HTTPHeaderDict({'Content-Length': '126', 'Content-Type': 'application/json; charset=utf-8', 'cache-control': 'no-cache'})
+[35mDEBUG   [0m selenium.webdriver.remote.remote_connection:remote_connection.py:357 Finished Request
+[35mDEBUG   [0m selenium.webdriver.remote.remote_connection:remote_connection.py:301 POST http://localhost:63169/session/0d5b7672cc1ae611982e812160f1962c/execute/sync {'script': '/* getAttribute */return (function(){return (function(){var d=this||self;function f(a,b){function c(...', 'args': [{'element-6066-11e4-a52e-4f735466cecf': 'f.926085B246BB9B4630751145BCA91F84.d.3EF5EA37938A803EC692BD4597F03F0E.e.54'}, 'value']}
+[35mDEBUG   [0m urllib3.connectionpool:connectionpool.py:549 http://localhost:63169 "POST /session/0d5b7672cc1ae611982e812160f1962c/execute/sync HTTP/1.1" 200 0
+[35mDEBUG   [0m selenium.webdriver.remote.remote_connection:remote_connection.py:330 Remote response: status=200 | data={"value":"1000"} | headers=HTTPHeaderDict({'Content-Length': '16', 'Content-Type': 'application/json; charset=utf-8', 'cache-control': 'no-cache'})
+[35mDEBUG   [0m selenium.webdriver.remote.remote_connection:remote_connection.py:357 Finished Request
+[32mINFO    [0m root:base.py:18 通过xpath定位,元素是//textarea[@placeholder='请输入课程介绍']
+[35mDEBUG   [0m selenium.webdriver.remote.remote_connection:remote_connection.py:301 POST http://localhost:63169/session/0d5b7672cc1ae611982e812160f1962c/element {'using': 'xpath', 'value': "//textarea[@placeholder='请输入课程介绍']"}
+[35mDEBUG   [0m urllib3.connectionpool:connectionpool.py:549 http://localhost:63169 "POST /session/0d5b7672cc1ae611982e812160f1962c/element HTTP/1.1" 200 0
+[35mDEBUG   [0m selenium.webdriver.remote.remote_connection:remote_connection.py:330 Remote response: status=200 | data={"value":{"element-6066-11e4-a52e-4f735466cecf":"f.926085B246BB9B4630751145BCA91F84.d.3EF5EA37938A803EC692BD4597F03F0E.e.55"}} | headers=HTTPHeaderDict({'Content-Length': '126', 'Content-Type': 'application/json; charset=utf-8', 'cache-control': 'no-cache'})
+[35mDEBUG   [0m selenium.webdriver.remote.remote_connection:remote_connection.py:357 Finished Request
+[35mDEBUG   [0m selenium.webdriver.remote.remote_connection:remote_connection.py:301 POST http://localhost:63169/session/0d5b7672cc1ae611982e812160f1962c/execute/sync {'script': '/* getAttribute */return (function(){return (function(){var d=this||self;function f(a,b){function c(...', 'args': [{'element-6066-11e4-a52e-4f735466cecf': 'f.926085B246BB9B4630751145BCA91F84.d.3EF5EA37938A803EC692BD4597F03F0E.e.55'}, 'value']}
+[35mDEBUG   [0m urllib3.connectionpool:connectionpool.py:549 http://localhost:63169 "POST /session/0d5b7672cc1ae611982e812160f1962c/execute/sync HTTP/1.1" 200 0
+[35mDEBUG   [0m selenium.webdriver.remote.remote_connection:remote_connection.py:330 Remote response: status=200 | data={"value":""} | headers=HTTPHeaderDict({'Content-Length': '12', 'Content-Type': 'application/json; charset=utf-8', 'cache-control': 'no-cache'})
+[35mDEBUG   [0m selenium.webdriver.remote.remote_connection:remote_connection.py:357 Finished Request
+[32mINFO    [0m root:base.py:18 通过xpath定位,元素是//span[text()='取 消']/parent::button
+[35mDEBUG   [0m selenium.webdriver.remote.remote_connection:remote_connection.py:301 POST http://localhost:63169/session/0d5b7672cc1ae611982e812160f1962c/element {'using': 'xpath', 'value': "//span[text()='取 消']/parent::button"}
+[35mDEBUG   [0m urllib3.connectionpool:connectionpool.py:549 http://localhost:63169 "POST /session/0d5b7672cc1ae611982e812160f1962c/element HTTP/1.1" 200 0
+[35mDEBUG   [0m selenium.webdriver.remote.remote_connection:remote_connection.py:330 Remote response: status=200 | data={"value":{"element-6066-11e4-a52e-4f735466cecf":"f.926085B246BB9B4630751145BCA91F84.d.3EF5EA37938A803EC692BD4597F03F0E.e.321"}} | headers=HTTPHeaderDict({'Content-Length': '127', 'Content-Type': 'application/json; charset=utf-8', 'cache-control': 'no-cache'})
+[35mDEBUG   [0m selenium.webdriver.remote.remote_connection:remote_connection.py:357 Finished Request
+[35mDEBUG   [0m selenium.webdriver.remote.remote_connection:remote_connection.py:301 POST http://localhost:63169/session/0d5b7672cc1ae611982e812160f1962c/element/f.926085B246BB9B4630751145BCA91F84.d.3EF5EA37938A803EC692BD4597F03F0E.e.321/click {}
+[35mDEBUG   [0m urllib3.connectionpool:connectionpool.py:549 http://localhost:63169 "POST /session/0d5b7672cc1ae611982e812160f1962c/element/f.926085B246BB9B4630751145BCA91F84.d.3EF5EA37938A803EC692BD4597F03F0E.e.321/click HTTP/1.1" 200 0
+[35mDEBUG   [0m selenium.webdriver.remote.remote_connection:remote_connection.py:330 Remote response: status=200 | data={"value":null} | headers=HTTPHeaderDict({'Content-Length': '14', 'Content-Type': 'application/json; charset=utf-8', 'cache-control': 'no-cache'})
+[35mDEBUG   [0m selenium.webdriver.remote.remote_connection:remote_connection.py:357 Finished Request</pre>
+                                </div>
+                                <div class="tab-pane fade" role="tabpanel" aria-labelledby="contact-tab">
+                                    <pre style="line-height: 18px">E:\page_object/logs/2024_04_10_log.log
+查询成功
+</pre>
+                                </div>
+                                
+                                
+
+
+                            </div>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+            
+
+            </tbody>
+        </table>
+    </div>
+
+    <div style="height: 200px"></div>
+</div>
+
+
+<script>
+    var tbodyTr = $('tbody tr');
+    var testResult = $("#testResult");
+    var testClass = $("#testClass");
+    <!--    用例执行详细信息显示切换-->
+    $(".btn_info").click(function () {
+        $(this).parent().parent().next().toggle();
+
+    });
+    // 当选择用例类之后触发
+    testClass.change(function () {
+        var cls = $(this).val();
+        var res = testResult.val();
+        elementDisplay(cls, res);
+        sort()
+    });
+    testResult.change(function () {
+        var res = $(this).val();
+        var cls = testClass.val();
+        elementDisplay(cls, res);
+        sort()
+    });
+
+    function elementDisplay(cls, res) {
+        // 用例数据的显示
+        if (cls === "所有") {
+            if (res === "所有") {
+                tbodyTr.has('button').show();
+            } else if (res === '成功') {
+                tbodyTr.hide();
+                tbodyTr.has('button').has('.text-success').show()
+
+            } else if (res === '失败') {
+                tbodyTr.hide();
+                tbodyTr.has('button').has('.text-warning').show()
+
+            } else if (res === '错误') {
+                tbodyTr.hide();
+                tbodyTr.has('button').has('.text-danger').show()
+
+            } else if (res === '跳过') {
+                tbodyTr.hide();
+                tbodyTr.has('button').has('.text-info').show()
+            }
+        } else {
+            if (res === "所有") {
+                tbodyTr.hide();
+                tbodyTr.has('button').has('.' + cls + '').show()
+            } else if (res === '成功') {
+                tbodyTr.hide();
+                tbodyTr.has('button').has('.' + cls + '').has('.text-success').show()
+            } else if (res === '失败') {
+                tbodyTr.hide();
+                tbodyTr.has('button').has('.' + cls + '').has('.text-warning').show()
+            } else if (res === '错误') {
+                tbodyTr.hide();
+                tbodyTr.has('button').has('.' + cls + '').has('.text-danger').show()
+            } else if (res === '跳过') {
+                tbodyTr.hide();
+                tbodyTr.has('button').has('.' + cls + '').has('.text-info').show()
+            }
+        }
+    }
+
+    function sort() {
+        //重新排列显示序号
+        // 选择所有可以见的tr
+        var visibleTr = tbodyTr.filter(":visible");
+
+        visibleTr.each(function (index, element) {
+            element.firstElementChild.innerHTML = index + 1;
+
+        })
+
+    }
+
+    $('.nav-tabs li').click(function () {
+        $(this).find('a').addClass('active')
+        $(this).siblings().find('a').removeClass('active');
+        $(this).parent().next().children('.tab-content div').eq($(this).index()).addClass('active show').siblings().removeClass('active show')
+    });
+</script>
+
+<script type="text/javascript">
+    // 基于准备好的dom，初始化echarts实例
+    var myChart = echarts.init(document.getElementById('char'));
+    var myChart2 = echarts.init(document.getElementById('char2'));
+    // 指定图表的配置项和数据
+    option = {
+        color: ['#00a10a', '#ddb518', 'rgba(204,46,41,0.73)', '#85898c'],
+        tooltip: {
+            trigger: 'item',
+            formatter: '{a} <br/>{b}: {c} ({d}%)'
+        },
+        legend: {
+            orient: 'vertical',
+            left: 10,
+            data: ['通过', '失败', '错误', '跳过']
+        },
+        series: [
+            {
+                name: '测试结果',
+                type: 'pie',
+                radius: ['50%', '70%'],
+                avoidLabelOverlap: false,
+                label: {
+                    show: false,
+                    position: 'center'
+                },
+                emphasis: {
+                    label: {
+                        show: true,
+                        fontSize: '30',
+                        fontWeight: 'bold'
+                    }
+                },
+                labelLine: {
+                    show: false
+                },
+                data: [
+                    {value: 1, name: '通过'},
+                    {value: 1, name: '失败'},
+                    {value: 0, name: '错误'},
+                    {value: 0, name: '跳过'}
+                ]
+            }
+        ]
+    };
+    option2 = {
+        tooltip: {
+            formatter: '{a} <br/>{b} : {c}%'
+        },
+        toolbox: {
+            feature: {
+                restore: {},
+                saveAsImage: {}
+            }
+        },
+        series: [
+            {
+                name: '测试结果',
+                type: 'gauge',
+                detail: {formatter: '50.00%'},
+                data: [{value: '50.00', name: '用例通过率'}],
+                axisLine: {
+                    lineStyle: {
+                        color: [
+                            [0.2, '#c20000'],
+                            [0.8, '#ddb518'],
+                            [1, '#00a10a']]
+                    }
+                }
+            }
+        ]
+    };
+
+
+    myChart2.setOption(option2);
+    // 使用刚指定的配置项和数据显示图表。
+    myChart.setOption(option);
+</script>
+
+
+</body>
+</html>
