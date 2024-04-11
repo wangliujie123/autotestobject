@@ -1,0 +1,2 @@
+# autotestobject
+python+pytest+selenium
