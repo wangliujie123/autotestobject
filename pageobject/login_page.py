@@ -5,7 +5,6 @@ from selenium.webdriver.common.by import By
 import  time,os,pytest
 from pageobject import fateadm_api
 from selenium import webdriver
-import pytest_check as check
 
 
 class LoginPage(Base):

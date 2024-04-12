@@ -1,8 +1,6 @@
 import sys
 sys.path.append("../page_object")
-from lxml import etree
-from bs4 import BeautifulSoup
-import requests,time,pytest
+import time
 from base.base import  Base
 from selenium.webdriver.common.by import By
 from selenium import webdriver

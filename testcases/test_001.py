@@ -1,6 +1,7 @@
 import sys
 sys.path.append("../page_object")
-import time,unittest,HTMLTestRunner,pytest
+import pytest
+#import time,unittest,HTMLTestRunner
 from common.function import project_path
 from common.function import config_url
 from pageobject.login_page import LoginPage
