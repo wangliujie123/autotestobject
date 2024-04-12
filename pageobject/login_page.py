@@ -23,7 +23,7 @@ class LoginPage(Base):
 
     login_button = "xpath", "//span[text()='登录']/ancestor::button"
     
-    def login_system(self,username='admin',password='HM_2023_test'):
+    def login_system(self,username='admin',password='test'):
         #filename = "capture.png"
         #if os.path.exists(filename):
         #    os.remove(filename)

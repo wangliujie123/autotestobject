@@ -1,10 +1,10 @@
 import pytest
 from selenium import webdriver
 import sys
-
-from pageobject.login_page import LoginPage
 sys.path.append("../page_object")
-from common.function import config_url
+from pageobject.login_page import LoginPage
+from common.exceldata import read_excel
+from common.function import config_url,project_path
 
 # 全局设置driver方法1
 driver = None
@@ -22,7 +22,10 @@ def browser():
     driver.implicitly_wait(10)
     print("正在启动浏览器:Edge")
     login = LoginPage(driver)
-    res = login.login_system()
+    data = read_excel(project_path()+"/data/testdata.xlsx",1)
+    username = data[0][1]
+    password = data[1][1]
+    res = login.login_system(username,password)
 
     yield driver
     driver.close()

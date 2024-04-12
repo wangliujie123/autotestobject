@@ -1,4 +1,6 @@
-import  xlrd,os
+import xlrd,os
+import sys
+sys.path.append("../page_object")
 from common.function import project_path
 #读excel操作、所有数据存放字典中
 #filename为文件名
@@ -17,6 +19,7 @@ def read_excel(filename,index):
 
 if __name__ == '__main__':
     #读取excel操作，返回字典
-    data = read_excel(project_path()+"/data/testdata.xlsx",0)
+    data = read_excel(project_path()+"/data/testdata.xlsx",1)
     print(data)
     print(data.get(1))
+    print(data[0][1],data[1][1])
