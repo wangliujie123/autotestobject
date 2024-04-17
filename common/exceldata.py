@@ -10,7 +10,6 @@ def read_excel(filename,index):
     sheet = xls.sheet_by_index(index)
     dic={}
     for j in range(sheet.ncols):
-
         data=[]
         for i in range(sheet.nrows):
           data.append(sheet.row_values(i)[j])

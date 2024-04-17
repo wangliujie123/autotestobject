@@ -38,7 +38,6 @@ class LoginPage(Base):
         time.sleep(3)
         testname = self.gettext(self.testname)
         print(testname)
-        return testname
 
 if __name__ == '__main__':
     driver = webdriver.Edge()
